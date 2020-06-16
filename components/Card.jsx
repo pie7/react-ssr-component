@@ -1,11 +1,22 @@
 import React, {useState} from "react";
 
-function Card({ url, date, title, explanation, copyright }) {
+function Card({ url, date, title, explanation, copyright, media_type }) {
     const [isLoad, setIsLoad] = useState(false)
     return (
         <div className="card__container">
             <div className="card__image">
-                <img src={url} onLoad={() => setIsLoad(true)} />
+                {media_type === "image"
+                    ? <img src={url} onLoad={() => setIsLoad(true)} />
+                    :
+                    <iframe
+                        src={url}
+                        onLoad={() => setIsLoad(true)}
+                        frameBorder="0"
+                        allowFullScreen
+                        width="640"
+                        height="320"
+                    />
+                }
             </div>
             <p>{date}</p>
             <p className="card__title">
@@ -33,15 +44,6 @@ function Card({ url, date, title, explanation, copyright }) {
                     align-items: center;
                     justify-content: center;
                 }
-
-                // .card__image::before {
-                //     display: ${isLoad ? 'none' : 'block'};
-                //     content: ' ';
-                //     width: 100%;
-                //     padding-top: 100%;
-                //     background-color: rgba(0, 0, 0, 0.05)
-                // }
-
 
                 .card__image img {
                     max-height: 320px;
